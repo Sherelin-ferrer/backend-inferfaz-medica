@@ -1,23 +1,22 @@
 import express from "express";
 import dotenv from "dotenv";
-import cors from "cors";
 import connectDB from "./config/database.js";
+import citasRouter from "./router/citasRouter.js";
+import authRouter from "./router/authRouter.js"
 
 dotenv.config();
+connectDB();
 
 const app = express();
 
-// Middlewares
-app.use(cors());
 app.use(express.json());
 
-// Conectar base de datos
-connectDB();
+// Ruta base
 
-// Ruta de prueba
-app.get("/", (req, res) => {
-  res.json({ message: "Servidor funcionando 🚀" });
-});
+app.use("/api/citas", citasRouter);
+app.use("/api/auth", authRouter);
+
+
 
 const PORT = process.env.PORT || 4000;
 
